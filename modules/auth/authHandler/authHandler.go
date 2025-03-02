@@ -8,12 +8,14 @@ import (
 type (
 	AuthHandlerService interface{}
 	authHandler        struct {
+		cfg        config.Config
 		authUscase authuscase.AuthUscaseService
 	}
 )
 
 func NewAuthHandler(cfg config.Config, authUscase authuscase.AuthUscaseService) AuthHandlerService {
 	return authHandler{
+		cfg:        cfg,
 		authUscase: authUscase,
 	}
 }
