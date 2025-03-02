@@ -9,7 +9,7 @@ import (
 )
 
 type (
-	config struct {
+	Config struct {
 		App      App
 		Db       Db
 		Jwt      Jwt
@@ -54,18 +54,18 @@ type (
 	}
 )
 
-func LoadConfig(path string) config {
+func LoadConfig(path string) Config {
 	if err := godotenv.Load(path); err != nil {
 		log.Fatal("Error loading .env file")
 	}
-	return config{
+	return Config{
 		App: App{
 			Name:  os.Getenv("APP_NAME"),
 			Url:   os.Getenv("APP_URL"),
 			Stage: os.Getenv("APP_STAGE"),
 		},
 		Db: Db{
-			Url: os.Getenv(""),
+			Url: os.Getenv("DB_URL"),
 		},
 		Jwt: Jwt{
 			AccessSecretKey: os.Getenv("JWT_ACCESS_SECRET_KEY"),

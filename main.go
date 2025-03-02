@@ -6,12 +6,12 @@ import (
 	"os"
 
 	"github.com/50Mph/go-api/config"
+	"github.com/50Mph/go-api/pkg/database"
 )
 
 func main() {
 
 	ctx := context.Background()
-	_ = ctx
 
 	cfg := config.LoadConfig(func() string {
 		if len(os.Args) < 2 {
@@ -19,5 +19,11 @@ func main() {
 		}
 		return os.Args[1]
 	}())
+
 	log.Println(cfg)
+
+	//Database connections
+	db := database.DbConn(ctx, &cfg)
+
+	log.Print(db)
 }

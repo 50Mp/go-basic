@@ -1,18 +1,24 @@
-devrun:
-	go run main.go ./env/dev/.env.dev
+dev:
+	go run main.go ./env/dev/.env.auth
 
-prodrun:
+prod:
 	go run main.go ./env/prod/.env.prod
 
-testrun:
+test:
 	go run main.go ./test/prod/.env.test
 
-dbup:
-	docker compose -f docker-compose.db.yml up -d
+up:
+	podman compose -f docker-compose.db.yml up --detach
+down:
+	podman compose -f docker-compose.db.yml down
 
-
-
-
-
+start:
+	podman compose -f docker-compose.db.yml start
+stop:
+	podman compose -f docker-compose.db.yml stop
+ps:
+	podman compose -f docker-compose.db.yml ps
+images:
+	podman compose -f docker-compose.db.yml images
 # .PHONY: is a special target that tells make that the listed targets are not files
-.PHONY: devrun, prodrun, testrun, updb
+.PHONY: dev prod test up down start stop ps images
