@@ -23,7 +23,7 @@ func main() {
 	log.Println(cfg)
 
 	//Database connections
-	db := database.DbConn(ctx, &cfg)
+	db, _ := database.DbConn(ctx, &cfg)
 
 	log.Print(db)
 }
