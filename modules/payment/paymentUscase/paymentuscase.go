@@ -12,6 +12,7 @@ type (
 func NewPaymentUsecase(paymentRepository paymentrepositoy.PaymentRepositoryService) PaymentUsecaseService {
 	return paymentUsecase{paymentRepository: paymentRepository}
 }
+
 func (p *paymentUsecase) authConn() paymentrepositoy.PaymentRepositoryService {
 	return p.paymentRepository
 }

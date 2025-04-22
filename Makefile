@@ -21,4 +21,8 @@ ps:
 images:
 	podman compose -f docker-compose.db.yml images
 # .PHONY: is a special target that tells make that the listed targets are not files
-.PHONY: dev prod test up down start stop ps images
+
+tidy:
+	go mod tidy
+
+.PHONY: dev prod test up down start stop ps images tydi

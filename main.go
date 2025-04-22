@@ -7,6 +7,7 @@ import (
 
 	"github.com/50Mph/go-api/config"
 	"github.com/50Mph/go-api/pkg/database"
+	"github.com/50Mph/go-api/server"
 )
 
 func main() {
@@ -25,5 +26,12 @@ func main() {
 	//Database connections
 	db, _ := database.DbConn(ctx, &cfg)
 
-	log.Print(db)
+	defer db.Disconnect(ctx)
+
+	// Initialize the server
+	// server := server.NewServer(db, cfg)
+	// server.Start()
+	// Graceful shutdown
+
+	server.Start(ctx, &cfg, db)
 }
