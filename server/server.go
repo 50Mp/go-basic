@@ -90,6 +90,7 @@ func Start(pcx context.Context, cfg *config.Config, db *mongo.Client) (*server, 
 
 	//body limit
 	s.app.Use(middleware.BodyLimit("2M"))
+	// Middleware CORS
 
 	switch s.config.App.Name {
 	case "auth":

@@ -17,5 +17,7 @@ func (s *server) intemServer() {
 
 	_ = itemshandlers
 	_ = itemsGrpc
+	items := s.app.Group("/api/v1/items")
 
+	_ = items // Define the items group for the API routes
 }
