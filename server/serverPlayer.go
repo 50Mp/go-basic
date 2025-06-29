@@ -12,11 +12,10 @@ func (s *server) playerService() {
 	playerHandler := playerhandler.NewPlayerHandler(*s.config, playerUscase)
 	playerGrpchandler := playerhandler.NewPlayerGrpcHandler(playerUscase)
 
-	PlayerQuery := playerHandler.NewQueryHandler(*s.config, playerUscase)
+	playerqueryHandler := playerhandler.NewQueryHttpHandler(*s.config, playerUscase)
+	_ = playerqueryHandler
 	_ = playerHandler
 	_ = playerGrpchandler
-	_ = PlayerQuery
-
 	player := s.app.Group("/api/v1/player")
 
 	_ = player

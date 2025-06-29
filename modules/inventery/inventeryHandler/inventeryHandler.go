@@ -5,21 +5,24 @@ import (
 	inventeryuscase "github.com/50Mph/go-api/modules/inventery/inventeryUscase"
 )
 
-type inventeryHandler struct {
-	cfg             config.Config
-	inventeryUscase inventeryuscase.InventeryUscase
-}
+type (
+	InventeryHttpsHandler interface {}
+	inventeryHttphandler struct {
+		cfg             config.Config
+		inventeryUscase inventeryuscase.InventeryUscase
+	}
+)
 
-func NewInventeryHandler(cfg config.Config, inventeryUscase inventeryuscase.InventeryUscase) *inventeryHandler {
-	return &inventeryHandler{
+func NewInventeryHandler(cfg config.Config, inventeryUscase inventeryuscase.InventeryUscase) InventeryHttpsHandler {
+	return inventeryHttphandler{
 		cfg:             cfg,
 		inventeryUscase: inventeryUscase,
 	}
 }
 
-func (h inventeryHandler) NewQueryHandler(cfg config.Config, inventeryUscase inventeryuscase.InventeryUscase) *inventeryHandler {
-	return &inventeryHandler{
-		cfg:             cfg,
+func (h inventeryHttphandler) NewQueryHandler(cfg config.Config, inventeryUscase inventeryuscase.InventeryUscase) InventeryHttpsHandler {
+	return inventeryHttphandler{
+		cfg:            cfg ,
 		inventeryUscase: inventeryUscase,
 	}
 }

@@ -6,25 +6,27 @@ import (
 )
 
 type (
-	PlayerHandler struct {
+	// PlayerHandler defines the interface for player HTTP handlers.
+
+	PlayerHttpHandler interface{}
+	playerHttpHandler struct {
 		// playerUsecase is the usecase for player operations.
 		cfg           config.Config
 		playerUsecase playeruscase.PlayerUsecase
 	}
 )
-
 // NewPlayerHandler creates a new PlayerHandler
-func NewPlayerHandler(cfg config.Config, playerUsecase playeruscase.PlayerUsecase) PlayerHandler {
-	return PlayerHandler{
+func NewPlayerHandler(cfg config.Config, playerUsecase playeruscase.PlayerUsecase) PlayerHttpHandler {
+	return playerHttpHandler{
 		cfg:           cfg,
 		playerUsecase: playerUsecase,
 	}
 }
 
 // NewQueryHandler creates a new PlayerQuery handler
-func (h *PlayerHandler) NewQueryHandler(cfg config.Config, NewQueryHandler playeruscase.PlayerUsecase) PlayerHandler {
-	return PlayerHandler{
+func  NewQueryHttpHandler(cfg config.Config, playerUsecase playeruscase.PlayerUsecase) PlayerHttpHandler {
+	return playerHttpHandler{
 		cfg:           cfg,
-		playerUsecase: h.playerUsecase,
+		playerUsecase: playerUsecase,
 	}
 }
