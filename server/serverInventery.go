@@ -6,7 +6,7 @@ import (
 	inventeryuscase "github.com/50Mph/go-api/modules/inventery/inventeryUscase"
 )
 
-func (s *server) inventoryServer() {
+func (s *server) inventoryService() {
 
 	inventoryRepository := inventeryrepository.NewInventeryRepository(s.db)
 	inventoryUsecase := inventeryuscase.NewInebnteryUscase(inventoryRepository)

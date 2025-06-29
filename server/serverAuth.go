@@ -6,13 +6,13 @@ import (
 	authuscase "github.com/50Mph/go-api/modules/auth/authUscase"
 )
 
-func (s *server) authServer() {
+func (s *server) authService() {
 	authRepository := authrepository.NewAuthRepository(s.db)
 	authUsecase := authuscase.NewAuthUscase(authRepository)
-	//
+	// HTTP handler
 	authHandler := authhandler.NewAuthHandler(*s.config, authUsecase)
-	//
-	authGrpc := authhandler.NewAuthGrpcHandler(*s.config)
+	// // gRPC handler
+	authGrpc := authhandler.NewAuthGrpcHandler(authUsecase)
 
 	_ = authGrpc
 	_ = authHandler

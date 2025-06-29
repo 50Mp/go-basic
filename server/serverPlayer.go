@@ -6,18 +6,19 @@ import (
 	playeruscase "github.com/50Mph/go-api/modules/player/playerUscase"
 )
 
-func (s *server) playerServer() {
+func (s *server) playerService() {
 	playerRepository := playerrepository.NewPlayerRepository(s.db)
 	playerUscase := playeruscase.NewPlayerUsecase(playerRepository)
-	playerHandler := playerhandler.NewPlayerHandler(playerUscase)
+	playerHandler := playerhandler.NewPlayerHandler(*s.config, playerUscase)
 	playerGrpchandler := playerhandler.NewPlayerGrpcHandler(playerUscase)
 
+	PlayerQuery := playerHandler.NewQueryHandler(*s.config, playerUscase)
 	_ = playerHandler
 	_ = playerGrpchandler
+	_ = PlayerQuery
 
 	player := s.app.Group("/api/v1/player")
 
 	_ = player
 
 }
- 

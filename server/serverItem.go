@@ -6,12 +6,12 @@ import (
 	itemsuscase "github.com/50Mph/go-api/modules/items/itemsUscase"
 )
 
-func (s *server) intemServer() {
+func (s *server) itemService() {
 
 	itemsrepository := itemsrepository.NewItemRepository(s.db)
 	itemsuscase := itemsuscase.NewItemsUscae(itemsrepository)
 
-	itemshandlers := itemshandler.NewItem(itemsuscase)
+	itemshandlers := itemshandler.NewItemHttpHandler(itemsuscase)
 
 	itemsGrpc := itemshandler.NewItemGrpcHandler(itemsuscase)
 

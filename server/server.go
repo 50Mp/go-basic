@@ -20,9 +20,13 @@ import (
 
 type (
 	server struct {
-		app        *echo.Echo
-		db         *mongo.Client
-		config     *config.Config
+		// Echo instance
+		app *echo.Echo
+		// MongoDB client
+		db *mongo.Client
+		// config file
+		config *config.Config
+		// midlware ...
 		middleware middlewarehandler.MiddlerwareHandler
 	}
 )
@@ -73,7 +77,6 @@ func (s *server) gracefulShutdown(pcx context.Context, quit <-chan os.Signal) {
 //StartServer starts the server and listens for incoming requests
 
 func Start(pcx context.Context, cfg *config.Config, db *mongo.Client) (*server, error) {
-
 	s := &server{
 		app:        echo.New(),
 		db:         db,
@@ -84,24 +87,28 @@ func Start(pcx context.Context, cfg *config.Config, db *mongo.Client) (*server, 
 	// Middleware Timeout
 	s.app.Use(middleware.TimeoutWithConfig(middleware.TimeoutConfig{
 		Skipper:      middleware.DefaultSkipper,
-		ErrorMessage: "Error: Timeout",
+		ErrorMessage: "Error: Request timeout",
 		Timeout:      30 * time.Second,
 	}))
 
 	//body limit
 	s.app.Use(middleware.BodyLimit("2M"))
 	// Middleware CORS
-
 	switch s.config.App.Name {
 	case "auth":
+		s.authService()
 	case "player":
-	case "itme":
-	case "invertory":
+		s.playerService()
+	case "item":
+		s.itemService()
+	case "inventory":
+		s.inventoryService()
 	case "payment":
+		s.paymentService()
 	}
 
 	//graceful shutdown
-
+	// Create a channel to listen for OS signals
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
 

@@ -6,11 +6,12 @@ import (
 	"github.com/50Mph/go-api/modules/payment/paymenthandler"
 )
 
-func (s *server) paymentServer() {
+func (s *server) paymentService() {
+	// Initialize payment repository, usecase, and handlers
 	paymentRepository := paymentrepositoy.NewPaymentRepository(s.db)
 	paymentUsecase := paymentuscase.NewPaymentUsecase(paymentRepository)
-	paymentHandler := paymenthandler.NewPaymentHandler(paymentUsecase)
-	paymentGrpchandler := paymenthandler.NewPaymentGrpcHandler(paymentUsecase)
+	paymentHandler := paymenthandler.NewPaymentHandler(*s.config, paymentUsecase)
+	paymentGrpchandler := paymenthandler.NewPaymentGrpcHandler(*s.config, paymentUsecase)
 	_ = paymentHandler
 	_ = paymentGrpchandler
 

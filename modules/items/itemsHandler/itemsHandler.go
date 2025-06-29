@@ -9,7 +9,7 @@ type (
 	}
 )
 
-func NewItem(itemsUcase itemsuscase.ItemsUcase) *Item {
+func NewItemHttpHandler(itemsUcase itemsuscase.ItemsUcase) *Item {
 	return &Item{
 		itemsUcase: itemsUcase,
 	}
